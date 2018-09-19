@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  title: User Login API
+  title: Authentication API
   description: This API provides access to Insert, Update & Fetch data from User Database.
   version: v2.0
 definitions:
