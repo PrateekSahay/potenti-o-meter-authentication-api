@@ -1,0 +1,245 @@
+swagger: "2.0"
+info:
+  title: User Login API
+  description: This API provides access to Insert, Update & Fetch data from User Database.
+  version: v2.0
+definitions:
+  User:
+    type: object
+    required:
+      - UserId
+      - FirstName
+      - LastName
+      - Email
+      - Password
+    properties:
+      UserId:
+        type: integer
+      FirstName:
+        type: string
+      LastName:
+        type: string
+      Email:
+        type: string
+      Password:
+        type: string
+      Contact:
+        type: integer
+        format: int64
+  Email:
+    type: object
+    required:
+      - Email
+    properties:
+      Email:
+        type: string
+paths:
+ /users:
+  get:
+    summary: Gets all users information.
+    produces:
+    - application/json
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/User'
+        examples:
+          application/json: |-
+                {
+                  [
+                    {
+                      "UserId": 1,
+                      "FirstName": "John",
+                      "LastName": "Doe",
+                      "Email": "johndoe@example.com",
+                      "Password": "john123",
+                      "Contact": 1234567890
+                    },
+                    {
+                      "UserId": 2,
+                      "FirstName": "Harvey",
+                      "LastName": "Specter"
+                      "Email": "harveryspecter@specterlitt.com",
+                      "Password": "harvey567",
+                      "Contact": 5769832123
+                    },
+                  ]
+                }
+      404:
+        description: Not Found
+  post:
+    summary: Adds a new user.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: array
+            items: 
+            $ref: '#/definitions/User'
+    responses:
+      201:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/User'
+      400:
+        description: Bad Request
+
+ /users/{userId}:
+  get:
+    summary: Gets user information by ID.
+    parameters:
+    - in: path
+      name: userId
+      required: true
+      schema:
+        type: integer
+      description: User Id for the user whose information has to be fetched.
+    produces:
+    - application/json
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/User'
+      400: 
+        description: Bad Request
+      404:
+        description: Not Found
+  put:
+    summary: Updates user information by ID.
+    parameters:
+    - in: path
+      name: userId
+      required: true
+      schema:
+        type: integer
+      description: User Id for the user whose information has to be fetched.
+    produces:
+    - application/json
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/User'
+      400:
+        description: Bad Request
+      404:
+        description: Not Found
+  delete:
+    summary: Deletes user.
+    parameters:
+    - in: path
+      name: userId
+      required: true
+      schema:
+        type: integer
+      description: User Id for the user whose information has to be fetched.
+    produces:
+    - application/json
+    responses:
+      204: 
+        description: OK
+      400:
+        description: Bad Request
+      404:
+        description: Not Found
+      
+ /users/{email}:
+  get:
+    summary: Gets user information by email
+    parameters:
+    - in: path
+      name: email
+      required: true
+      schema:
+        type: string
+      description: Email for the User whose information has to be fetched.
+    produces:
+    - application/json
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/User'
+        examples:
+          application/json: |-
+                {
+                  [
+                    {
+                      "UserId": 1,
+                      "FirstName": "John",
+                      "LastName": "Doe",
+                      "Email": "johndoe@example.com",
+                      "Password": "john123",
+                      "Contact": 1234567890
+                    },
+                    {
+                      "UserId": 2,
+                      "FirstName": "Harvey",
+                      "LastName": "Specter"
+                      "Email": "harveryspecter@specterlitt.com",
+                      "Password": "harvey567",
+                      "Contact": 5769832123
+                    },
+                  ]
+                }
+      404:
+        description: Not Found
+
+ /users/Logout:
+  post:
+    summary: Deletes the cookie from browser and logs out the user.
+    produces:
+    - application/json
+    responses:
+      200:
+        description: OK
+
+ /users/Quiz:
+  get:
+    summary: Gets userid from cookie in browser
+    produces:
+    - application/json
+    responses:
+      200:
+        description: OK
+        examples:
+          application/json: |-
+              {
+                id: 1003
+              }
+
+ /users/Email:
+  post:
+    summary: Sends email to the user email id.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: array
+            items: 
+            $ref: '#/definitions/Email'
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/Email'
+      
+
+  
+
