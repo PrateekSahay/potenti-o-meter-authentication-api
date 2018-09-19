@@ -10,4 +10,5 @@ dotnet: 2.1
 script:
   - dotnet restore UserLoginAPI/
   - dotnet test UserLoginAPI/UserLoginAPI.Tests
-  
+after_success:
+  - /bin/bash ./deploy.sh
