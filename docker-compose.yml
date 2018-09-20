@@ -7,6 +7,9 @@ services:
       ACCEPT_EULA: "Y"
   authentication_web:
     build: ./UserLoginAPI/UserLoginAPI
+    ports:
+      - "5050:80"
+      - "587:587"
     depends_on:
       - authentication_db
     labels:
