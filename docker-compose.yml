@@ -1,14 +1,14 @@
 version: '3'
 services:
-  authentication_db:
+  db:
     image: "microsoft/mssql-server-linux"
     environment:
       SA_PASSWORD: "YourStrongP@ssword"
       ACCEPT_EULA: "Y"
-  authentication_web:
+  web:
     build: ./UserLoginAPI/UserLoginAPI
     depends_on:
-      - authentication_db
+      - db
     labels:
       - "SERVICE_NAME=Authentication"
       - "SERVICE_TAGS=AuthenticationTag"
