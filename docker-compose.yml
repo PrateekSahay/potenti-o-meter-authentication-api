@@ -9,6 +9,8 @@ services:
     build: ./UserLoginAPI/UserLoginAPI
     depends_on:
       - db
+    expose:
+      - "80"
     labels:
       - "SERVICE_NAME=Authentication"
       - "SERVICE_TAGS=AuthenticationTag"

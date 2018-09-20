@@ -12,7 +12,7 @@ RUN dotnet publish -c Release -o out
 # Build runtime image
 FROM microsoft/dotnet:aspnetcore-runtime
 WORKDIR /app
-EXPOSE 80 587
+EXPOSE 80
 
 COPY --from=build-env /app/out .
 CMD ["dotnet", "UserLoginAPI.dll"]
