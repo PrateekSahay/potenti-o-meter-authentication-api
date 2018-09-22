@@ -105,6 +105,7 @@ namespace UserLoginAPI.Services
                     claims.AppendString("FirstName", user.FirstName);
                     claims.AppendString("LastName", user.LastName);
                     claims.AppendString("Email", user.Email);
+                    claims.AppendString("Contact", user.Contact.ToString());
 
                     Chilkat.Jwt jwt = new Chilkat.Jwt();
 
@@ -112,8 +113,8 @@ namespace UserLoginAPI.Services
                 
                     using (var client = new ConsulClient())
                     {
-                        client.Config.Address = new Uri("http://10.0.75.1:8500");
-                        var putPair = new KVPair("secretkey")
+                        client.Config.Address = new Uri("http://172.17.0.1:8500");
+                        var putPair = new KVPair(user.Email.ToString())
                         {
                             Value = Encoding.UTF8.GetBytes(rsaPublicKeyAsString)
                         };
@@ -122,7 +123,7 @@ namespace UserLoginAPI.Services
 
                         if (putAttempt.Response)
                         {
-                            var getPair = await client.KV.Get("secretkey");
+                            var getPair = await client.KV.Get(user.Email.ToString());
                             if (getPair.Response != null)
                             {
                                 Console.WriteLine("Getting Back the Stored String");
@@ -195,22 +196,25 @@ namespace UserLoginAPI.Services
             return false;
         }
 
-        public string GetUserIDfromToken(string Token)
+        public Dictionary<string, string> GetUserDetailsfromToken(string Token)
         {
-            var handler = new JwtSecurityTokenHandler();
-            var tokens = handler.ReadJwtToken(Token);
-            var userid = tokens.Claims.First(cl => cl.Type == "UserID").Value;
-            return userid;
-        }
+            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+            JwtSecurityToken tokens = handler.ReadJwtToken(Token);
+            Dictionary<string, string> details = new Dictionary<string, string>();
+            details.Add("UserID", tokens.Claims.First(cl => cl.Type == "UserID").Value);
+            details.Add("FirstName", tokens.Claims.First(cl => cl.Type == "FirstName").Value);
+            details.Add("LastName", tokens.Claims.First(cl => cl.Type == "LastName").Value);
+            details.Add("Email", tokens.Claims.First(cl => cl.Type == "Email").Value);
+            details.Add("Contact", tokens.Claims.First(cl => cl.Type == "Contact").Value);
+            //string userid = tokens.Claims.First(cl => cl.Type == "UserID").Value;
+            //string FirstName = tokens.Claims.First(cl => cl.Type == "FirstName").Value;
+            //string LastName = tokens.Claims.First(cl => cl.Type == "LastName").Value;
+            //string Email = tokens.Claims.First(cl => cl.Type == "Email").Value;
+            //string Contact = tokens.Claims.First(cl => cl.Type == "Contact").Value;
+            //Dictionary<string, string> details = new List<string> { userid, FirstName, LastName, Email, Contact };
 
-        public string GetFirstNamefromToken(string Token)
-        {
-            var handler = new JwtSecurityTokenHandler();
-            var tokens = handler.ReadJwtToken(Token);
-            var firstname = tokens.Claims.First(cl => cl.Type == "FirstName").Value;
-            return firstname;
+            return details;
         }
-
     }
 
     public interface IUsersControllerService
@@ -226,7 +230,6 @@ namespace UserLoginAPI.Services
         bool EmailExists(string email);
         string HashPassword(string Password);
         bool EmailChanged(int id, string email);
-        string GetUserIDfromToken(string Token);
-        string GetFirstNamefromToken(string Token);
+        Dictionary<string, string> GetUserDetailsfromToken(string Token);
     }
 }

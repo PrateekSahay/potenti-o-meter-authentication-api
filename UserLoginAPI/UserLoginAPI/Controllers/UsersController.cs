@@ -192,28 +192,27 @@ namespace UserLoginAPI.Controllers
             return Ok();
         }
 
-        // GET: api/Users/Quiz
-        [HttpGet("Quiz")]
+        // GET: api/Users/Details
+        [HttpGet("Details")]
         public IActionResult Quiz()
         {
             var token = HttpContext.Request.Cookies["UserLoginAPItoken"];
-            var userid = _service.GetUserIDfromToken(token);
-            return Ok(new { tokenstring = token,
-                            id = userid});
+            var details = _service.GetUserDetailsfromToken(token);
+            return Ok(details);
         }
 
-        // GET: api/Users/FirstName
-        [HttpGet("FirstName")]
-        public IActionResult FirstName()
-        {
-            var token = HttpContext.Request.Cookies["UserLoginAPItoken"];
-            var firstname = _service.GetFirstNamefromToken(token);
-            return Ok(new
-            {
-                tokenstring = token,
-                name = firstname
-            });
-        }
+        // GET: api/Users/Details
+        //[HttpGet("Details")]
+        //public IActionResult FirstName()
+        //{
+        //    var token = HttpContext.Request.Cookies["UserLoginAPItoken"];
+        //    var firstname = _service.GetFirstNamefromToken(token);
+        //    return Ok(new
+        //    {
+        //        tokenstring = token,
+        //        name = firstname
+        //    });
+        //}
 
         // POST: api/Users/Email
         [HttpPost("Email")]
