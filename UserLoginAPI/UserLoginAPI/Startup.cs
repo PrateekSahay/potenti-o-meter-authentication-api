@@ -62,6 +62,7 @@ namespace UserLoginAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddScoped<IUsersControllerService, UsersControllerService>();
+            services.AddSingleton<IJwtTokenService, JwtTokenService>();
 
             services.AddDbContext<UserLoginAPIContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("UserLoginAPIContext"), dbOptions => dbOptions.EnableRetryOnFailure(maxRetryCount: 50, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null)));

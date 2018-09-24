@@ -114,22 +114,22 @@ namespace UserLoginAPI.Services
                     using (var client = new ConsulClient())
                     {
                         client.Config.Address = new Uri("http://172.17.0.1:8500");
-                        var putPair = new KVPair(user.Email.ToString())
+                        var putPair = new KVPair("secretkey")
                         {
                             Value = Encoding.UTF8.GetBytes(rsaPublicKeyAsString)
                         };
 
                         var putAttempt = await client.KV.Put(putPair);
 
-                        if (putAttempt.Response)
-                        {
-                            var getPair = await client.KV.Get(user.Email.ToString());
-                            if (getPair.Response != null)
-                            {
-                                Console.WriteLine("Getting Back the Stored String");
-                                Console.WriteLine(Encoding.UTF8.GetString(getPair.Response.Value, 0, getPair.Response.Value.Length));
-                            }
-                        }
+                        //if (putAttempt.Response)
+                        //{
+                        //    var getPair = await client.KV.Get(user.Email.ToString());
+                        //    if (getPair.Response != null)
+                        //    {
+                        //        Console.WriteLine("Getting Back the Stored String");
+                        //        Console.WriteLine(Encoding.UTF8.GetString(getPair.Response.Value, 0, getPair.Response.Value.Length));
+                        //    }
+                        //}
                     }
 
                     return token;
