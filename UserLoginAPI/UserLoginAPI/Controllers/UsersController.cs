@@ -26,6 +26,7 @@ namespace UserLoginAPI.Controllers
             _service = service;
         }
 
+
         // GET: api/Users
         [HttpGet]
         public IEnumerable<User> GetUser()
