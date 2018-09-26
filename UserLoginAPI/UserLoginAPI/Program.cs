@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,6 +14,14 @@ namespace UserLoginAPI
     {
         public static void Main(string[] args)
         {
+            try
+            {
+                DotNetEnv.Env.Load("./machine_config/machine.env");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
             CreateWebHostBuilder(args).Build().Run();
         }
 
