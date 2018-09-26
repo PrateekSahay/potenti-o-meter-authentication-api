@@ -11,8 +11,8 @@ services:
       - db
     expose:
       - "80"
-    volumes:
-      - "/machine_config:/app/machine_config"
     labels:
       - "SERVICE_80_NAME=Authentication"
       - "SERVICE_TAGS=AuthenticationTag"
+    volumes:
+      - "/machine_config:/app/machine_config"
