@@ -113,9 +113,10 @@ namespace UserLoginAPI.Services
                 
                     using (var client = new ConsulClient())
                     {
-                        string ConsulIP = Environment.GetEnvironmentVariable("MACHINE_LOCAL_IP4"); 
-                        client.Config.Address = new Uri("http://" + ConsulIP + ":8500");
-                        Console.WriteLine(ConsulIP);
+                        string ConsulIP = Environment.GetEnvironmentVariable("MACHINE_LOCAL_IP4");
+                        string consuliphost = "http://" + ConsulIP + ":8500";
+                        client.Config.Address = new Uri(consuliphost);
+                        Console.WriteLine(consuliphost);
                         //client.Config.Address = new Uri("http://172.17.0.1:8500");
                         var putPair = new KVPair("secretkey")
                         {
