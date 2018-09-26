@@ -65,7 +65,7 @@ namespace UserLoginAPI
             services.AddSingleton<IJwtTokenService, JwtTokenService>();
 
             services.AddDbContext<UserLoginAPIContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("UserLoginAPIContext"), dbOptions => dbOptions.EnableRetryOnFailure(maxRetryCount: 50, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null)));
+                    options.UseSqlServer(Configuration.GetConnectionString("UserLoginAPIContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

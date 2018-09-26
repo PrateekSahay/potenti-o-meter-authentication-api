@@ -12,5 +12,5 @@ services:
     expose:
       - "80"
     labels:
-      - "SERVICE_NAME=Authentication"
+      - "SERVICE_80_NAME=Authentication"
       - "SERVICE_TAGS=AuthenticationTag"
