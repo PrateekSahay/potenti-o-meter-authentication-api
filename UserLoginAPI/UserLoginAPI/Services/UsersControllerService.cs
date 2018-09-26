@@ -113,7 +113,7 @@ namespace UserLoginAPI.Services
                 
                     using (var client = new ConsulClient())
                     {
-                        string ConsulIP = Environment.GetEnvironmentVariable("MACHINE_LOCAL_IP4");
+                        string ConsulIP = Environment.GetEnvironmentVariable("MACHINE_LOCAL_IPV4");
                         string consuliphost = "http://" + ConsulIP + ":8500";
                         Console.WriteLine(consuliphost);
                         client.Config.Address = new Uri(consuliphost);
